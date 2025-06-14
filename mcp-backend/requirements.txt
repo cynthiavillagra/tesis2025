@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+openai
+mysql-connector-python
+# mcp-lang (si existe en PyPI, si no, se puede implementar la lógica MCP manualmente)
