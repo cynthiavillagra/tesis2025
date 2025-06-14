@@ -1,0 +1,6 @@
+# Requisitos principales para el backend (FastAPI + OpenAI + MySQL)
+fastapi
+uvicorn
+openai
+mysql-connector-python
+dotenv
