@@ -2,6 +2,15 @@
 
 ## Instrucciones de Instalación y Uso
 
+### 0. Levantar el servidor XAMPP y la base de datos
+
+1. **Abrir XAMPP** y asegurarse de iniciar los servicios **Apache** y **MySQL**.
+2. Ingresar a **phpMyAdmin** desde [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+3. Crear una base de datos llamada `chatbot_tesis` (puedes usar el botón "Nueva").
+4. El usuario por defecto es `root` y la contraseña suele estar vacía (`''`). Si cambias esto, actualízalo en la configuración del backend.
+5. (Opcional) Importa el esquema de tablas si tienes un archivo SQL.
+6. El frontend puede abrirse desde: [http://localhost/tesis-con-mcp/mcp-frontend/index.html](http://localhost/tesis-con-mcp/mcp-frontend/index.html) si usas XAMPP.
+
 ### 1. Clonar el repositorio
 ```bash
 git clone https://github.com/cynthiavillagra/tesis2025.git
