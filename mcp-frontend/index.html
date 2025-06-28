@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>Gestión de Usuarios - MCP</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -39,10 +40,84 @@
                 <form id="consulta-chat-form">
                     <input type="text" id="consulta-chat-input" placeholder="Haz tu consulta..." autocomplete="off" required>
                     <button type="submit">Enviar</button>
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - MCP</title>
+    <!-- Incluye Tailwind CSS desde CDN para las utilidades básicas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuentes Inter de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tu archivo de estilos personalizados (donde se aplicarán las directivas @apply) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex flex-col justify-stretch items-stretch w-full overflow-x-hidden">
+    <div class="container max-w-7xl mx-auto p-4 md:p-8 bg-white shadow-lg rounded-xl my-8 flex flex-col h-full min-h-[calc(100vh-4rem)]">
+        <h1 class="text-center text-4xl font-extrabold text-blue-700 mb-8">Gestión de Usuarios</h1>
+
+        <!-- Sección de Añadir Usuario - Oculta por defecto -->
+        <section class="form-section bg-gray-50 p-6 rounded-lg shadow-inner mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4">Añadir Nuevo Usuario</h2>
+            <form id="add-user-form" class="flex flex-col md:flex-row gap-3 mb-4" autocomplete="off">
+                <input type="text" id="nombre" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-800" placeholder="Nombre" required>
+                <input type="text" id="apellido" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-800" placeholder="Apellido" required>
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-md">Agregar Usuario</button>
+            </form>
+            <div id="alerta-form" class="hidden alert text-sm px-4 py-3 rounded-lg relative transition-all duration-300"></div>
+        </section>
+
+        <!-- Sección de Búsqueda - Oculta por defecto -->
+        <section class="search-section bg-gray-50 p-6 rounded-lg shadow-inner mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4">Buscar Usuarios</h2>
+            <input type="text" id="search" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-800" placeholder="Buscar por nombre o apellido">
+            <div id="busqueda-sugerencia" class="hidden text-sm px-4 py-3 rounded-md mt-3 font-semibold bg-yellow-100 border border-yellow-400 text-yellow-700"></div>
+        </section>
+
+        <!-- Secciones Principales: Lista, Chat de Ingreso, Chat de Consulta -->
+        <div class="main-flex flex flex-col lg:grid lg:grid-cols-3 lg:gap-6 flex-1 min-h-0 h-full">
+            <!-- Lista de Usuarios -->
+            <section class="list-section flex flex-col bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6 lg:mb-0">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4">Listado de Usuarios</h2>
+                <ul id="user-list" class="flex-1 overflow-y-auto border border-gray-200 rounded-lg bg-gray-50 divide-y divide-gray-200">
+                    <!-- Users will be rendered here -->
+                </ul>
+            </section>
+
+            <!-- Chat para Ingresar Usuarios -->
+            <section class="chat-section flex flex-col bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6 lg:mb-0">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4">Chat: Ingresar Usuarios</h2>
+                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-100 border border-gray-200 rounded-lg mb-4 space-y-3">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <form id="chat-form" class="flex gap-2">
+                    <input type="text" id="chat-input" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-800" placeholder="Escribe tu mensaje..." autocomplete="off" required>
+                    <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-md">Enviar</button>
+                </form>
+            </section>
+
+            <!-- Chat para Consultas -->
+            <section class="consulta-chat-section flex flex-col bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4">Chat: Consultas</h2>
+                <div id="consulta-chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-100 border border-gray-200 rounded-lg mb-4 space-y-3">
+                    <!-- Consulta chat messages will appear here -->
+                </div>
+                <form id="consulta-chat-form" class="flex gap-2">
+                    <input type="text" id="consulta-chat-input" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-800" placeholder="Haz tu consulta..." autocomplete="off" required>
+                    <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-md">Enviar</button>
+>>>>>>> 80602d7 (correccion frontend)
                 </form>
             </section>
         </div>
     </div>
+<<<<<<< HEAD
     <script src="main.js"></script>
 </body>
 </html>
+=======
+
+    <!-- Tu archivo JavaScript principal -->
+    <script src="main.js"></script>
+</body>
+</html>
+>>>>>>> 80602d7 (correccion frontend)
