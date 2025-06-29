@@ -222,8 +222,20 @@ async def consulta_with_llm(user_message, session_id="consulta"):
                         msg = f"No se encontraron coincidencias exactas, pero existe un usuario similar: {mejor_usuario} (similitud: {mejor_similitud:.2f})"
                         consulta_memory[session_id].append({"user": user_message, "assistant": msg})
                         return {"similar": mejor_usuario, "result": msg}
-                consulta_memory[session_id].append({"user": user_message, "assistant": f"La respuesta es: {count}"})
-                return f"La respuesta es: {count}"
+                # Redactar respuesta bonita usando el LLM
+                pretty_prompt = (
+                    f"El usuario preguntó: '{user_message}'. "
+                    f"El resultado crudo de la consulta es: {count}. "
+                    "Redacta una respuesta clara y conversacional en español, explicando el resultado de forma natural. No uses formato de lista ni solo números, sino una frase completa."
+                )
+                pretty_response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[{"role": "system", "content": "Eres un asistente que redacta respuestas claras y naturales para resultados de consultas de usuarios."}, {"role": "user", "content": pretty_prompt}],
+                    max_tokens=128,
+                    temperature=0.5
+                ).choices[0].message.content.strip()
+                consulta_memory[session_id].append({"user": user_message, "assistant": pretty_response})
+                return pretty_response
             # Si es un select nombre, apellido, mostrar lista
             elif re.match(r"select nombre, apellido", sql, re.IGNORECASE):
                 if not result:
@@ -253,11 +265,37 @@ async def consulta_with_llm(user_message, session_id="consulta"):
                         msg = "No se encontraron coincidencias ni usuarios similares."
                         consulta_memory[session_id].append({"user": user_message, "assistant": msg})
                         return msg
-                consulta_memory[session_id].append({"user": user_message, "assistant": result})
-                return result
+                # Redactar respuesta bonita usando el LLM para listados
+                nombres = [f"{n} {a}" for n, a in result]
+                nombres_str = ", ".join(nombres) if nombres else "ningún usuario encontrado"
+                pretty_prompt = (
+                    f"El usuario preguntó: '{user_message}'. "
+                    f"El resultado crudo de la consulta es: {nombres_str}. "
+                    "Redacta una respuesta clara y conversacional en español, explicando el resultado de forma natural. Si no hay resultados, indícalo de forma amable."
+                )
+                pretty_response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[{"role": "system", "content": "Eres un asistente que redacta respuestas claras y naturales para resultados de consultas de usuarios."}, {"role": "user", "content": pretty_prompt}],
+                    max_tokens=192,
+                    temperature=0.5
+                ).choices[0].message.content.strip()
+                consulta_memory[session_id].append({"user": user_message, "assistant": pretty_response})
+                return pretty_response
             else:
-                consulta_memory[session_id].append({"user": user_message, "assistant": str(result)})
-                return str(result)
+                # Redactar respuesta bonita usando el LLM para cualquier otro resultado
+                pretty_prompt = (
+                    f"El usuario preguntó: '{user_message}'. "
+                    f"El resultado crudo de la consulta es: {result}. "
+                    "Redacta una respuesta clara y conversacional en español, explicando el resultado de forma natural. Si no hay resultados, indícalo de forma amable."
+                )
+                pretty_response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[{"role": "system", "content": "Eres un asistente que redacta respuestas claras y naturales para resultados de consultas de usuarios."}, {"role": "user", "content": pretty_prompt}],
+                    max_tokens=192,
+                    temperature=0.5
+                ).choices[0].message.content.strip()
+                consulta_memory[session_id].append({"user": user_message, "assistant": pretty_response})
+                return pretty_response
         except Exception as e:
             consulta_memory[session_id].append({"user": user_message, "assistant": f"Error ejecutando SQL: {e}"})
             return f"Error ejecutando SQL: {e}"
